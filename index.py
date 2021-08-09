@@ -55,3 +55,4 @@ def new_hotel_admin():
 if __name__ ==  '__main__':
 
     app.run(port=8500,debug=True)
+    print('新分支')
