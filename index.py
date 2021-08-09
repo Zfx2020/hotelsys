@@ -7,7 +7,7 @@ app = create_app()
 
 @app.route('/')
 def index():
-    return userinfo_db.get_all_user()
+    return jsonify(userinfo_db.get_user_byid(1))
 
 @app.route('/adminLogin')
 def adminLogin():
@@ -55,4 +55,3 @@ def new_hotel_admin():
 if __name__ ==  '__main__':
 
     app.run(port=8500,debug=True)
-    print('新分支')
