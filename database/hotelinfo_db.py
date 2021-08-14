@@ -1,3 +1,5 @@
+from flask import jsonify
+
 from database import db_operations
 
 def get_hotel_byid(id):
@@ -5,9 +7,24 @@ def get_hotel_byid(id):
     conn,cursor = db_operations.mysql_init()
     sql = "select id,name,address,instruction,phone,star from hotel where id = %s"
     cursor.execute(sql, id)
-    result = cursor.fetchone()
+    hotel = cursor.fetchone()
+    result={'id':hotel[0],'name':hotel[1],'address':hotel[2],'instruction':hotel[3],'phone':hotel[4],'star':hotel[5]}
     db_operations.mysql_close(conn,cursor)
     return result
+
+def get_all_hotel():
+    conn,cursor = db_operations.mysql_init()
+    sql = "select id,name,address,instruction,phone,star from hotel"
+    results = db_operations.get_info(cursor,sql)
+    db_operations.mysql_close(conn,cursor)
+    hotels = []
+    hotel = {}
+    for result in results:
+        hotel = {'id':result[0],'name':result[1],'address':result[2],'instruction':result[3],'phone':result[4],'star':result[5],'rooms':{},'services':{}}
+        hotels.append(hotel)
+        hotel = {}
+    print(results)
+    return hotels
 
 def update_by_id(id,name,address,instruction,phone,star):
     conn, cursor = db_operations.mysql_init()

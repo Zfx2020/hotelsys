@@ -24,7 +24,7 @@ def get_all_user():
 def get_user_byid(id):
 
     conn,cursor = db_operations.mysql_init()
-    sql = "select id,username,password,name,phone from user where id = %s"
+    sql = "select id,username,password,name,phone,type from user where id = %s"
     cursor.execute(sql, id)
     result = cursor.fetchone()
     db_operations.mysql_close(conn,cursor)
@@ -39,19 +39,19 @@ def admin_login(username,psw):
     result = cursor.fetchone()
     print(result)
     if(len(result)>0):
-        map.update({'status':'登录成功','code':200})
-        map.update({'user':result})
+        map.update({'status':200,'desc':'登录成功'})
+        map.update({'user':{'id':result[0],'username':result[1],'name':result[2],'password':result[3],'type':result[4]}})
     else:
-        map.update({'status': '登录失败', 'code': 404})
+        map.update({'status': 404, 'desc': 404})
     return jsonify(map)
 
 def new_hotel_admin(psw,name,phone):
     conn,cursor = db_operations.mysql_init()
-    sql = "insert into user(username, password, name, phone, state, type) values ('酒店管理员',%s,%s,%s,1,2)"
+    sql = "insert into user(username, password, name, phone, state, type) values (%s,%s,'酒店管理员',%s,1,2)"
     map = {}
     lastid = 1
     try:
-        result = cursor.execute(sql, (psw, name, phone))
+        result = cursor.execute(sql, (name, psw, phone))
         lastid = cursor.lastrowid
         if result == 1:
             map.update({'desc': '注册成功'})
