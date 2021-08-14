@@ -47,18 +47,9 @@ def getRoom():
 
 @app.route('/updateHotelInfo',methods=['GET','POST'])
 def getJson():
-    json = request.get_json()
-    print(json)
-    id = int(json.get('id'))
-    name = json.get('name')
-    address = json.get('address')
-    instruction = json.get('instruction')
-    phone = int(json.get('phone'))
-    star = int(json.get('star'))
-    print(id,name,address,instruction,phone,star)
-    result = hotelinfo_db.update_by_id(id,name,address,instruction,phone,star)
-
-    return jsonify(hotelinfo_db.get_hotel_byid(id),result)
+    result = {}
+    result.update({'status': 404, 'desc': '本版本没有此功能'})
+    return jsonify(result)
 
 @app.route('/updateRoomInfo',methods=['GET','POST'])
 def updateRoomInfo():
@@ -76,14 +67,9 @@ def updateRoomInfo():
 
 @app.route('/newHotel',methods=['GET','POST'])
 def new_hotel():
-    json = request.get_json()
-    name = json.get('name')
-    address = json.get('address')
-    instruction = json.get('instruction')
-    phone = int(json.get('phone'))
-    star = int(json.get('star'))
-    id,result = hotelinfo_db.new_hotel(name,address,instruction,phone,star)
-    return jsonify(hotelinfo_db.get_hotel_byid(id),result)
+    result = {}
+    result.update({'status': 404, 'desc': '本版本没有此功能'})
+    return jsonify(result)
 
 @app.route('/newHotelAdmin',methods=['GET','POST'])
 def new_hotel_admin():
