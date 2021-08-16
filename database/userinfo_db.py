@@ -38,7 +38,7 @@ def admin_login(username,psw):
     cursor.execute(sql, (username, md5psw))
     result = cursor.fetchone()
     print(result)
-    if(len(result)>0):
+    if(result!=None and len(result)>0):
         map.update({'status':200,'desc':'登录成功'})
         map.update({'user':{'id':result[0],'username':result[1],'name':result[2],'password':result[3],'type':result[4]}})
     else:
